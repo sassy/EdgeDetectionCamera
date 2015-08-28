@@ -2,11 +2,6 @@
 <html>
 <head>
 <title>Edge for Video</title>
-<style>
-video {
-    display:none;
-}
-</style>
 <script type="text/javascript">
 
 function getPosition(i, j, width) {
@@ -50,19 +45,19 @@ window.onload = function() {
 
     if (navigator.getUserMedia) {
       navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
-            var video = document.querySelector('video');
+            var video = document.createElement('video');
+            video.setAttribute('autoplay', 'true');
             video.src = window.URL.createObjectURL(localMediaStream);
             video.addEventListener('timeupdate', function() {
+                var dst = document.getElementById("c");
 
-                var canvas = document.createElement("canvas");
-                var ctx = canvas.getContext("2d");
-                var canvas3 = document.getElementById("c3");
-
-                canvas.width = canvas3.width = video.videoWidth;
-                canvas.height = canvas3.height = video.videoHeight;
-
+                var temp = document.createElement("canvas");
+                var ctx = temp.getContext("2d");
+                temp.width = dst.width = video.videoWidth;
+                temp.height = dst.height = video.videoHeight;
                 ctx.drawImage(video, 0, 0);
-                displayEdgeToCanvas(canvas, canvas3);
+
+                displayEdgeToCanvas(temp, dst);
 
             }, false);
         }, function(e) {
@@ -75,7 +70,6 @@ window.onload = function() {
 </script>
 </head>
 <body>
-  <canvas id="c3" width="300" height="300"></canvas>
-  <video autoplay></video><br><br>
+  <canvas id="c" width="300" height="300"></canvas>
 </body>
 </html>
