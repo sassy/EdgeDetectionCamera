@@ -3,9 +3,6 @@
 <head>
 <title>Edge for Video</title>
 <style>
-#c1 {
-    display:none;
-}
 video {
     display:none;
 }
@@ -20,22 +17,22 @@ function getPosition(i, j, width) {
 window.onload = function() {
 
     if (navigator.webkitGetUserMedia) {
-	navigator.getUserMedia = navigator.webkitGetUserMedia;
+      navigator.getUserMedia = navigator.webkitGetUserMedia;
     } else if(navigator.mozGetUserMedia) {
-	navigator.getUserMedia = navigator.mozGetUserMedia;
+      navigator.getUserMedia = navigator.mozGetUserMedia;
     }
- 
+
     if (navigator.getUserMedia) {
-	navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+      navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
             var video = document.querySelector('video');
-	    video.src = window.URL.createObjectURL(localMediaStream);
+            video.src = window.URL.createObjectURL(localMediaStream);
             video.addEventListener('timeupdate', function() {
 
-                var canvas = document.getElementById("c1");
+                var canvas = document.createElement("canvas");
                 var canvas3 = document.getElementById("c3");
                 var ctx = canvas.getContext("2d");
                 var ctx3 = canvas3.getContext("2d");
-                
+
                 canvas.width = canvas3.width = video.videoWidth;
                 canvas.height = canvas3.height = video.videoHeight;
                 ctx.drawImage(video, 0, 0);
@@ -59,23 +56,22 @@ window.onload = function() {
                         dst3.data[pos[4]+1] = 255 - (src.data[pos[0]+1] + src.data[pos[1]+1] + src.data[pos[2]+1] + src.data[pos[3]+1] + (src.data[pos[4]+1] * -8) + src.data[pos[5]+1] + src.data[pos[6]+1] + src.data[pos[7]+1] + src.data[pos[8]+1]);
                         dst3.data[pos[4]+2] = 255 - (src.data[pos[0]+2] + src.data[pos[1]+2] + src.data[pos[2]+2] + src.data[pos[3]+2] + (src.data[pos[4]+2] * -8) + src.data[pos[5]+2] + src.data[pos[6]+2] + src.data[pos[7]+2] + src.data[pos[8]+2]);
                         dst3.data[pos[4]+3] = src.data[pos[4]+3];
-                
+
                     }
                 }
                 ctx3.putImageData(dst3, 0, 0);
             }, false);
         }, function(e) {
-	    console.log(e);
+          console.log(e);
         });
     } else {
-	console.log("error");
+      console.log("error");
     }
 };
 </script>
 </head>
 <body>
-  <canvas id="c3" width="300" height="300"></canvas>  
+  <canvas id="c3" width="300" height="300"></canvas>
   <video autoplay></video><br><br>
-  <canvas id="c1" width="300" height="300"></canvas>
 </body>
 </html>
