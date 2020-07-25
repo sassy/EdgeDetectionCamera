@@ -6,17 +6,13 @@
 <script type="text/javascript">
 
 window.onload = function() {
-    if (navigator.webkitGetUserMedia) {
-      navigator.getUserMedia = navigator.webkitGetUserMedia;
-    } else if(navigator.mozGetUserMedia) {
-      navigator.getUserMedia = navigator.mozGetUserMedia;
-    }
+    navigator.mediaDevices = navigator.mediaDevices || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+      navigator.mediaDevices.getUserMedia({video: true, audio: true})
+      .then(function(localMediaStream) {
             var video = document.createElement('video');
             video.setAttribute('autoplay', 'true');
-            video.src = window.URL.createObjectURL(localMediaStream);
+            video.srcObject = localMediaStream;
             video.addEventListener('timeupdate', function() {
                 var dst = document.getElementById("c");
 
@@ -29,12 +25,10 @@ window.onload = function() {
                 displayEdgeToCanvas(temp, dst);
 
             }, false);
-        }, function(e) {
-          console.log(e);
-        });
-    } else {
-      console.log("error");
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
 };
 </script>
 </head>
