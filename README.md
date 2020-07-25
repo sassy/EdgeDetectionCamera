@@ -2,7 +2,7 @@
 
 detect edge from camera view.
 
-show : http://sassy.github.io/EdgeDetectionCamera/  
+show : https://sassy.github.io/EdgeDetectionCamera/  
 
 ## LICENSE
 
