@@ -5,31 +5,30 @@
 <script type="text/javascript" src="script/edge.js"></script>
 <script type="text/javascript">
 
-window.onload = function() {
+  window.onload = function () {
     navigator.mediaDevices = navigator.mediaDevices || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 
-      navigator.mediaDevices.getUserMedia({video: true, audio: true})
-      .then(function(localMediaStream) {
-            var video = document.createElement('video');
-            video.setAttribute('autoplay', 'true');
-            video.srcObject = localMediaStream;
-            video.addEventListener('timeupdate', function() {
-                var dst = document.getElementById("c");
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(localMediaStream => {
+        const video = document.createElement('video');
+        video.setAttribute('autoplay', 'true');
+        video.srcObject = localMediaStream;
+        video.addEventListener('timeupdate', () => {
+          const dst = document.getElementById("c");
 
-                var temp = document.createElement("canvas");
-                var ctx = temp.getContext("2d");
-                temp.width = dst.width = video.videoWidth;
-                temp.height = dst.height = video.videoHeight;
-                ctx.drawImage(video, 0, 0);
+          const temp = document.createElement("canvas");
+          const ctx = temp.getContext("2d");
+          temp.width = dst.width = video.videoWidth;
+          temp.height = dst.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0);
 
-                displayEdgeToCanvas(temp, dst);
-
-            }, false);
+          displayEdgeToCanvas(temp, dst);
+        }, false);
       })
       .catch((error) => {
         console.log(error);
       })
-};
+  };
 </script>
 </head>
 <body>

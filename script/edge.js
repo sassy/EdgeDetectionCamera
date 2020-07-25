@@ -4,13 +4,13 @@ function getPosition(i, j, width) {
 }
 
 function displayEdgeToCanvas(srcCanvas, dstCanvas) {
-  var srcCtx = srcCanvas.getContext("2d");
-  var dstCtx = dstCanvas.getContext("2d");
-  var src = srcCtx.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
-  var dst3 = dstCtx.createImageData(dstCanvas.width, dstCanvas.height);
-  for (var i = 1; i < dstCanvas.height-1; i++) {
-      for (var j = 1; j < dstCanvas.width-1; j++) {
-          var pos = new Array();
+  const srcCtx = srcCanvas.getContext("2d");
+  const dstCtx = dstCanvas.getContext("2d");
+  const src = srcCtx.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
+  const dst3 = dstCtx.createImageData(dstCanvas.width, dstCanvas.height);
+  for (let i = 1; i < dstCanvas.height-1; i++) {
+      for (let j = 1; j < dstCanvas.width-1; j++) {
+          const pos = new Array();
           pos[0] = getPosition(i-1, j-1, dstCanvas.width);
           pos[1] = getPosition(i-1, j,   dstCanvas.width);
           pos[2] = getPosition(i-1, j+1, dstCanvas.width);
